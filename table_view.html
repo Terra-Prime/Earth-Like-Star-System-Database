@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galactic Database - Table View</title>
+    <style>
+        .galactic-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            background: #0a0a2a;
+            color: #00ffff;
+        }
+        
+        .galactic-table th {
+            background: #1a1a4a;
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #333366;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+        }
+        
+        .galactic-table td {
+            padding: 6px;
+            border: 1px solid #333366;
+            vertical-align: top;
+        }
+        
+        .system-row:hover {
+            background: #1a2a4a;
+        }
+        
+        .quantum-badge {
+            display: inline-block;
+            padding: 1px 4px;
+            border-radius: 8px;
+            font-size: 0.7em;
+            margin: 1px;
+            background: #004400;
+        }
+        
+        .container {
+            max-width: 100%;
+            overflow-x: auto;
+            padding: 20px;
+        }
+        
+        .filters {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #1a1a4a;
+            border-radius: 8px;
+        }
+        
+        .filters input, .filters select {
+            margin: 5px;
+            padding: 5px;
+            background: #0a0a2a;
+            color: #00ffff;
+            border: 1px solid #333366;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌌 Galactic Database - CSV Table View</h1>
+        
+        <div class="filters">
+            <input type="text" id="searchSystem" placeholder="Search systems...">
+            <select id="filterQuadrant">
+                <option value="">All Quadrants</option>
+                <option value="Alpha-7">Alpha-7</option>
+                <option value="Beta-3">Beta-3</option>
+                <option value="Gamma-5">Gamma-5</option>
+                <option value="Delta-9">Delta-9</option>
+            </select>
+            <select id="filterContact">
+                <option value="">All Contact Status</option>
+                <option value="Open Diplomatic">Open Diplomatic</option>
+                <option value="Research Only">Research Only</option>
+                <option value="Contact Prepared">Contact Prepared</option>
+            </select>
+        </div>
+
+        <table class="galactic-table" id="csvTable">
+            <thead>
+                <tr>
+                    <th>System Catalog ID</th>
+                    <th>System UCS</th>
+                    <th>System Name</th>
+                    <th>Galactic Quadrant</th>
+                    <th>Distance (ly)</th>
+                    <th>Quantum Spatial</th>
+                    <th>Quantum Temporal</th>
+                    <th>Quantum Consciousness</th>
+                    <th>Resonance Hz</th>
+                    <th>Temporal Stability</th>
+                    <th>Star UCS</th>
+                    <th>Star Name</th>
+                    <th>Star Spectral</th>
+                    <th>Star Mass</th>
+                    <th>Star Age</th>
+                    <th>Star Luminosity</th>
+                    <th>Star Consciousness Tier</th>
+                    <th>Planet UCS</th>
+                    <th>Planet Name</th>
+                    <th>Planet Position</th>
+                    <th>Planet Class</th>
+                    <th>Planet Mass</th>
+                    <th>Planet Diameter</th>
+                    <th>Planet Gravity</th>
+                    <th>Planet Atmosphere</th>
+                    <th>Biosfer Coverage</th>
+                    <th>Planet Consciousness Tier</th>
+                    <th>Planet Phase Level</th>
+                    <th>Primary Species</th>
+                    <th>Technology Level</th>
+                    <th>Contact Status</th>
+                    <th>Moon UCS</th>
+                    <th>Moon Name</th>
+                    <th>Moon Diameter</th>
+                    <th>Moon Gravity</th>
+                    <th>Moon Phase Level</th>
+                    <th>Moon Function</th>
+                    <th>Verification Status</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Data will be populated by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Sample data - in practice, this would be loaded from CSV
+        const galacticData = [
+            // Data dari CSV akan dimasukkan di sini
+            // Format persis seperti baris CSV
+        ];
+
+        function renderCSVTable(data) {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+            
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.className = 'system-row';
+                
+                // Create cells for each column
+                const columns = [
+                    'system_catalog_id', 'system_ucs', 'system_name', 'galactic_quadrant', 'distance_ly',
+                    'quantum_spatial', 'quantum_temporal', 'quantum_consciousness', 'resonance_hz', 'temporal_stability',
+                    'star_ucs', 'star_name', 'star_spectral', 'star_mass', 'star_age', 'star_luminosity', 'star_consciousness_tier',
+                    'planet_ucs', 'planet_name', 'planet_position', 'planet_class', 'planet_mass', 'planet_diameter', 'planet_gravity',
+                    'planet_atmosphere', 'biosfer_coverage', 'planet_consciousness_tier', 'planet_phase_level', 'primary_species',
+                    'technology_level', 'contact_status', 'moon_ucs', 'moon_name', 'moon_diameter', 'moon_gravity', 'moon_phase_level',
+                    'moon_function', 'verification_status'
+                ];
+                
+                columns.forEach(col => {
+                    const td = document.createElement('td');
+                    td.textContent = row[col] || '';
+                    tr.appendChild(td);
+                });
+                
+                tableBody.appendChild(tr);
+            });
+        }
+
+        // Initial render
+        renderCSVTable(galacticData);
+    </script>
+</body>
+</html>
