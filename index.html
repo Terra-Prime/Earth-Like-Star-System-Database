@@ -5,7 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galactic Database</title>
     <style>
-        /* Include semua CSS dari kedua format di sini */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #0a0a2a;
+            color: white;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .tab-container {
+            margin: 20px 0;
+        }
+        .tab-button {
+            padding: 10px 20px;
+            margin: 5px;
+            background: #1a1a4a;
+            color: #00ffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .tab-button.active {
+            background: #00ffff;
+            color: #0a0a2a;
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background: #1a1a4a;
+            border-radius: 8px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
@@ -20,12 +61,102 @@
         
         <!-- CSV Table View -->
         <div id="csv-tab" class="tab-content active">
-            <!-- Copy HTML dari Format 1 di sini -->
+            <div class="container">
+        <h1>🌌 Galactic Database - System Group View</h1>
+        
+        <div class="filters">
+            <input type="text" id="searchSystem" placeholder="Search systems...">
+            <select id="filterQuadrant">
+                <option value="">All Quadrants</option>
+                <option value="Alpha-7">Alpha-7</option>
+                <option value="Beta-3">Beta-3</option>
+                <option value="Gamma-5">Gamma-5</option>
+                <option value="Delta-9">Delta-9</option>
+            </select>
+            <select id="filterTier">
+                <option value="">All Tiers</option>
+                <option value="5">Tier 5 Systems</option>
+                <option value="4">Tier 4+ Systems</option>
+            </select>
+        </div>
+
+        <div id="systemsContainer">
+            <!-- Systems will be populated here -->
+        </div>
+        </div>
+            
         </div>
         
         <!-- System Group View -->
         <div id="system-tab" class="tab-content">
-            <!-- Copy HTML dari Format 2 di sini -->
+           <div class="container">
+        <h1>🌌 Galactic Database - CSV Table View</h1>
+        
+        <div class="filters">
+            <input type="text" id="searchSystem" placeholder="Search systems...">
+            <select id="filterQuadrant">
+                <option value="">All Quadrants</option>
+                <option value="Alpha-7">Alpha-7</option>
+                <option value="Beta-3">Beta-3</option>
+                <option value="Gamma-5">Gamma-5</option>
+                <option value="Delta-9">Delta-9</option>
+            </select>
+            <select id="filterContact">
+                <option value="">All Contact Status</option>
+                <option value="Open Diplomatic">Open Diplomatic</option>
+                <option value="Research Only">Research Only</option>
+                <option value="Contact Prepared">Contact Prepared</option>
+            </select>
+        </div>
+
+        <table class="galactic-table" id="csvTable">
+            <thead>
+                <tr>
+                    <th>System Catalog ID</th>
+                    <th>System UCS</th>
+                    <th>System Name</th>
+                    <th>Galactic Quadrant</th>
+                    <th>Distance (ly)</th>
+                    <th>Quantum Spatial</th>
+                    <th>Quantum Temporal</th>
+                    <th>Quantum Consciousness</th>
+                    <th>Resonance Hz</th>
+                    <th>Temporal Stability</th>
+                    <th>Star UCS</th>
+                    <th>Star Name</th>
+                    <th>Star Spectral</th>
+                    <th>Star Mass</th>
+                    <th>Star Age</th>
+                    <th>Star Luminosity</th>
+                    <th>Star Consciousness Tier</th>
+                    <th>Planet UCS</th>
+                    <th>Planet Name</th>
+                    <th>Planet Position</th>
+                    <th>Planet Class</th>
+                    <th>Planet Mass</th>
+                    <th>Planet Diameter</th>
+                    <th>Planet Gravity</th>
+                    <th>Planet Atmosphere</th>
+                    <th>Biosfer Coverage</th>
+                    <th>Planet Consciousness Tier</th>
+                    <th>Planet Phase Level</th>
+                    <th>Primary Species</th>
+                    <th>Technology Level</th>
+                    <th>Contact Status</th>
+                    <th>Moon UCS</th>
+                    <th>Moon Name</th>
+                    <th>Moon Diameter</th>
+                    <th>Moon Gravity</th>
+                    <th>Moon Phase Level</th>
+                    <th>Moon Function</th>
+                    <th>Verification Status</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Data will be populated by JavaScript -->
+            </tbody>
+        </table>
+           </div>
         </div>
     </div>
 
@@ -42,8 +173,199 @@
                 document.getElementById(button.dataset.tab).classList.add('active');
             });
         });
+          // Function to group data by star system
+        function groupBySystem(data) {
+            const systems = {};
+            
+            data.forEach(row => {
+                const systemId = row.system_catalog_id;
+                
+                if (!systems[systemId]) {
+                    systems[systemId] = {
+                        system_info: {
+                            catalog_id: row.system_catalog_id,
+                            ucs: row.system_ucs,
+                            name: row.system_name,
+                            quadrant: row.galactic_quadrant,
+                            distance: row.distance_ly,
+                            quantum: {
+                                spatial: row.quantum_spatial,
+                                temporal: row.quantum_temporal,
+                                consciousness: row.quantum_consciousness
+                            },
+                            resonance: row.resonance_hz,
+                            temporal_stability: row.temporal_stability
+                        },
+                        star: {
+                            ucs: row.star_ucs,
+                            name: row.star_name,
+                            spectral: row.star_spectral,
+                            mass: row.star_mass,
+                            age: row.star_age,
+                            luminosity: row.star_luminosity,
+                            consciousness_tier: row.star_consciousness_tier
+                        },
+                        planets: []
+                    };
+                }
+                
+                // Add planet if not already added
+                const planetExists = systems[systemId].planets.some(p => p.ucs === row.planet_ucs);
+                if (!planetExists) {
+                    const planet = {
+                        ucs: row.planet_ucs,
+                        name: row.planet_name,
+                        position: row.planet_position,
+                        class: row.planet_class,
+                        mass: row.planet_mass,
+                        diameter: row.planet_diameter,
+                        gravity: row.planet_gravity,
+                        atmosphere: row.planet_atmosphere,
+                        biosfer: row.biosfer_coverage,
+                        consciousness_tier: row.planet_consciousness_tier,
+                        phase_level: row.planet_phase_level,
+                        primary_species: row.primary_species,
+                        technology_level: row.technology_level,
+                        contact_status: row.contact_status,
+                        moons: []
+                    };
+                    
+                    systems[systemId].planets.push(planet);
+                }
+                
+                // Add moon if exists
+                if (row.moon_ucs) {
+                    const planet = systems[systemId].planets.find(p => p.ucs === row.planet_ucs);
+                    if (planet) {
+                        planet.moons.push({
+                            ucs: row.moon_ucs,
+                            name: row.moon_name,
+                            diameter: row.moon_diameter,
+                            gravity: row.moon_gravity,
+                            phase_level: row.moon_phase_level,
+                            function: row.moon_function
+                        });
+                    }
+                }
+            });
+            
+            return systems;
+        }
 
-        // Include semua JavaScript dari kedua format di sini
+        function renderSystemView(groupedData) {
+            const container = document.getElementById('systemsContainer');
+            container.innerHTML = '';
+            
+            Object.values(groupedData).forEach(system => {
+                const systemCard = document.createElement('div');
+                systemCard.className = 'system-card';
+                
+                // System Header
+                const header = document.createElement('div');
+                header.className = 'system-header';
+                header.innerHTML = `
+                    🌌 ${system.system_info.name} 
+                    <span style="font-size: 0.7em; color: #888;">${system.system_info.ucs}</span>
+                `;
+                
+                // Star Info
+                const starInfo = document.createElement('div');
+                starInfo.className = 'star-info';
+                starInfo.innerHTML = `
+                    <strong>⭐ Central Star:</strong> ${system.star.name} (${system.star.spectral})<br>
+                    Mass: ${system.star_mass} Solar | Age: ${system.star.age}B years | 
+                    Consciousness: <span class="tier-badge tier-${system.star.consciousness_tier}">Tier ${system.star.consciousness_tier}</span><br>
+                    Quantum: 
+                    <span class="quantum-signature">${system.system_info.quantum.spatial}</span>
+                    <span class="quantum-signature">${system.system_info.quantum.temporal}</span>
+                    <span class="quantum-signature">${system.system_info.quantum.consciousness}</span>
+                `;
+                
+                systemCard.appendChild(header);
+                systemCard.appendChild(starInfo);
+                
+                // Planets
+                system.planets.forEach(planet => {
+                    const planetCard = document.createElement('div');
+                    planetCard.className = `planet-card ${planet.biosfer === '100%' ? 'primary-biosphere' : 'advanced-world'}`;
+                    
+                    let planetHTML = `
+                        <strong>🪐 ${planet.name}</strong> 
+                        <span class="tier-badge tier-${planet.consciousness_tier}">Tier ${planet.consciousness_tier}</span>
+                        <span style="float: right; font-size: 0.8em;">${planet.ucs}</span><br>
+                        <em>${planet.class} | Position: ${planet.position} | Biosfer: ${planet.biosfer}</em><br>
+                        Mass: ${planet.mass} Earth | Gravity: ${planet.gravity}G | 
+                        Phase: ${planet.phase_level} | Species: ${planet.primary_species}<br>
+                        Tech: ${planet.technology_level} | 
+                        Contact: <span class="contact-${planet.contact_status.toLowerCase().replace(' ', '-')}">${planet.contact_status}</span>
+                    `;
+                    
+                    // Moons
+                    if (planet.moons.length > 0) {
+                        planetHTML += `<div style="margin-top: 10px;"><strong>🌕 Moons:</strong>`;
+                        planet.moons.forEach(moon => {
+                            planetHTML += `
+                                <div class="moon-card">
+                                    <strong>${moon.name}</strong> (${moon.ucs})<br>
+                                    Diameter: ${moon.diameter}km | Gravity: ${moon.gravity}G | 
+                                    Phase: ${moon.phase_level} | Function: ${moon.function}
+                                </div>
+                            `;
+                        });
+                        planetHTML += `</div>`;
+                    }
+                    
+                    planetCard.innerHTML = planetHTML;
+                    systemCard.appendChild(planetCard);
+                });
+                
+                container.appendChild(systemCard);
+            });
+        }
+
+        // Example usage:
+        // const groupedData = groupBySystem(galacticData);
+        // renderSystemView(groupedData);
+
+        / Sample data - in practice, this would be loaded from CSV
+        const galacticData = [
+            // Data dari CSV akan dimasukkan di sini
+            // Format persis seperti baris CSV
+        ];
+
+        function renderCSVTable(data) {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+            
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.className = 'system-row';
+                
+                // Create cells for each column
+                const columns = [
+                    'system_catalog_id', 'system_ucs', 'system_name', 'galactic_quadrant', 'distance_ly',
+                    'quantum_spatial', 'quantum_temporal', 'quantum_consciousness', 'resonance_hz', 'temporal_stability',
+                    'star_ucs', 'star_name', 'star_spectral', 'star_mass', 'star_age', 'star_luminosity', 'star_consciousness_tier',
+                    'planet_ucs', 'planet_name', 'planet_position', 'planet_class', 'planet_mass', 'planet_diameter', 'planet_gravity',
+                    'planet_atmosphere', 'biosfer_coverage', 'planet_consciousness_tier', 'planet_phase_level', 'primary_species',
+                    'technology_level', 'contact_status', 'moon_ucs', 'moon_name', 'moon_diameter', 'moon_gravity', 'moon_phase_level',
+                    'moon_function', 'verification_status'
+                ];
+                
+                columns.forEach(col => {
+                    const td = document.createElement('td');
+                    td.textContent = row[col] || '';
+                    tr.appendChild(td);
+                });
+                
+                tableBody.appendChild(tr);
+            });
+        }
+
+        // Initial render
+        renderCSVTable(galacticData);
+
+        
     </script>
 </body>
 </html>
