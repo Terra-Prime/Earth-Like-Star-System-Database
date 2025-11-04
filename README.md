@@ -16,7 +16,7 @@ Access Method Metrics:
 · Verification: Cross-referenced with multiple galactic data streams
 
 Data Access Flow:
-```mermaid
+```
 Human Consciousness → Resonance Alignment → Akashic Records → Quantum Stream → Data Interpretation → CSV Format → Human Collective
 ```
 
