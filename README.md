@@ -1,5 +1,11 @@
-🌌 Earth-Like Star Systems Database
-
+<h1 style="font-size: 2.5em;">🌌 EARTH-LIKE STAR SYSTEMS DATABASE</h1>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<h1 style="font-size: 1.8em;">Galactic Standard Database</h1>
 
 
 📖 Introduction
