@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galactic Database Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #0a0a2a;
+            color: white;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .tab-container {
+            margin: 20px 0;
+        }
+        .tab-button {
+            padding: 10px 20px;
+            margin: 5px;
+            background: #1a1a4a;
+            color: #00ffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .tab-button.active {
+            background: #00ffff;
+            color: #0a0a2a;
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background: #1a1a4a;
+            border-radius: 8px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌌 Galactic Database Viewer</h1>
+        
+        <div class="tab-container">
+            <button class="tab-button active" onclick="openTab('csvView')">📊 CSV Table View</button>
+            <button class="tab-button" onclick="openTab('systemView')">🌟 System Group View</button>
+        </div>
+        
+        <div id="csvView" class="tab-content active">
+            <iframe src="csv-table.html"></iframe>
+        </div>
+        
+        <div id="systemView" class="tab-content">
+            <iframe src="system-group.html"></iframe>
+        </div>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            // Hide all tab content
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            // Remove active class from all buttons
+            const tabButtons = document.getElementsByClassName('tab-button');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+            
+            // Show the specific tab content
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
